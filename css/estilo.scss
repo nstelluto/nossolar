@@ -1,0 +1,866 @@
+@import url('https://fonts.googleapis.com/css?family=Tomorrow&display=swap');
+
+$branco-25: rgba(255, 255, 255, 0.25);
+$branco-50: rgba(255, 255, 255, 0.5);
+$branco-75: rgba(255, 255, 255, 0.75);
+$branco-100: rgba(255, 255, 255, 1);
+$preto-25: rgba(0, 0, 0, 0.25);
+$preto-50: rgba(0, 0, 0, 0.5);
+$preto-75: rgba(0, 0, 0, 0.75);
+$preto-100: rgba(0, 0, 0, 0.75);
+$azul-75: rgba(75, 175, 255, 0.75);
+$azul-100: rgba(75, 175, 255, 1);
+$vermelho-75: rgba(200, 0, 75, 0.75);
+$vermelho-100: rgba(200, 0, 75, 1);
+$lilas-75: rgba(100, 100, 200, 0.5);
+$lilas-100: rgba(100, 100, 200, 1);
+$turquesa-75: rgba(75, 200, 255, 0.75);
+$turquesa-100: rgba(75, 200, 255, 1);
+
+@mixin Barra {
+    &::-webkit-scrollbar {
+        width: 5px;
+        border-top: solid $branco-75 5px;
+        border-bottom: solid $branco-75 5px;
+    }
+    &::-webkit-scrollbar-track {
+        background: none;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $branco-25;
+        
+    }
+}
+@mixin Label {
+    transition: 0.2s ease-in-out;
+    padding: 10px;
+    background: linear-gradient(to right, $lilas-75, transparent);
+    &.ativo {
+        background: linear-gradient(to right, $azul-75, transparent);
+        &:hover {
+            background: linear-gradient(to right, $azul-100, transparent);
+        }
+    }
+}
+
+@mixin Button {
+    cursor: pointer;
+    font-family: 'Tomorrow', sans-serif;
+    padding: 10px;
+    color: $branco-75;
+    background: $azul-75;
+    border: none;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+    &:hover {
+        background: $turquesa-100;
+        color: $branco-100;
+    }
+    & span {
+        padding: 0 5px;
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.icone_alma {
+    --cor-alma: rgb(255, calc(250 - var(--nv)) , calc(255 - calc(var(--nv)*13)));
+    font-size: calc(var(--tamanho)*20);
+    position: relative;
+    color: rgb(200, 200, 200);
+    &::before {
+        z-index: -1;
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 34%;
+        height: calc(var(--ml)/2);
+        background: linear-gradient(to bottom, rgba(255, 255, 255, calc(0.2 * var(--nv))), transparent);
+        margin: auto 33% 20% 33%;
+        box-shadow: 
+            10px calc(calc(var(--tamanho)/ calc(11 - var(--nv))) * -1) calc(var(--tamanho)/ calc(11 - var(--nv))) var(--cor-alma),
+            -10px calc(calc(var(--tamanho)/ calc(11 - var(--nv))) * -1) calc(var(--tamanho)/ calc(11 - var(--nv))) var(--cor-alma),
+            inset 0 calc(var(--tamanho)/2) calc(calc(var(--tamanho)/2) * var(--nv)) var(--cor-alma),
+            inset 0 calc(var(--tamanho) * -1) calc(var(--tamanho) * 2) var(--cor-alma);
+    }
+}
+
+body {
+    --ml: 100%;
+    --nv: 1;
+
+    background: linear-gradient(to top, rgb(115, 135, 145),
+        rgb(70, 85, 100) 15vh,
+        rgb(60, 75, 90) 25vh,
+        rgb(50, 65, 80));
+    background-attachment: fixed;
+    display: grid;
+    filter: drop-shadow(1px 1px 2px $preto-75);
+    grid-template-columns: 100px 1fr 1fr 100px;
+    grid-template-rows: 150px 1fr;
+    grid-template-areas: 
+        "nav header header header"
+        "nav main aside .";
+    gap: 5vmin;
+    color: $branco-75;
+    font-family: 'Tomorrow', sans-serif;
+    a {
+        transition: 0.25s ease-in-out;
+        text-decoration: none;
+        color: $branco-75;
+    }
+    header {
+        grid-area: header;
+        display: grid;
+        grid-template-columns: auto 1fr 25vmin;
+        font-size: 2em;
+        h1 {
+            grid-column: 1;
+            margin: auto auto 1em 0;
+            font-weight: 100;
+            font-size: 1em;
+            font-variant: small-caps;
+        }
+        &::after {
+            content: "";
+            background-color: $branco-75;
+            grid-column: 2;
+            height: 0.07em;
+            align-self: flex-end;
+            margin-bottom: 1.2em;
+        }
+    }
+    
+    nav {
+        ul, ol {
+            list-style: none;
+            padding: 0;
+            margin: auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            li {
+                
+                padding: 1vmin;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                &:first-child {
+                    margin-top: auto;
+                }
+                &:last-child {
+                    margin-bottom: auto;
+                }
+                &.topo {
+                    margin-bottom: auto;
+                    margin-top: 2.5vmin;
+                }
+                &.fundo {
+                    margin-top: auto;
+                    margin-bottom: 2.5vmin;
+                }
+                .nav_link {
+                    transition: 0.2s ease-in-out;
+                    &:hover {
+                        color: $branco-100;
+                    }
+                    &.ativo {
+                        color: $turquesa-100;
+                        &:hover {
+                            color: $turquesa-75;
+                        }
+                    }
+                }
+            }
+        }
+        .material-icons {
+            font-size: 3em;
+        }
+        display: flex;
+        align-content: center;
+        grid-area: nav;
+        background: $preto-75;
+        // backdrop-filter: blur(0.5vmin);
+    }
+    
+    main {
+        grid-area: main;
+        overflow: hidden;
+        height: 100%;
+        scroll-snap-type: y mandatory;
+        & > section {
+            height: 100%;
+            scroll-snap-align: start;
+            #cadastro_form, #login_form {
+                overflow-y: auto;
+                width: 300px;
+                height: 80%;
+                padding-right: 5vmin;
+                @include Barra;
+            
+                .form_group {
+                    display: flex;
+                    flex-basis: auto;
+                    flex-direction: column;
+                    margin: 0 0 40px 0;
+                    & > * {
+                        display: block;
+                    }
+                    &:hover {
+                        label {
+                            background: linear-gradient(to right, $lilas-100, transparent);
+                        }
+                    }
+                    label {
+                        @include Label;
+                    }
+                    .form_control {
+                        position: relative;
+                        display: flex;
+                        flex-basis: auto;
+                        padding: 10px 0 5px 0;
+                        align-items: center;
+                        border-bottom: dashed 0.2vmin $branco-75;
+                        & > * {
+                            background: none;
+                            border: none;
+                            outline: none;
+                            color: $branco-75;
+                            &:focus {
+                                border: none;
+                                outline: none;
+                            }           
+                        }
+                        input[type="text"], input[type="email"], input[type="password"] {
+                            width: 100%;
+                            height: 24px;
+                            font-family: 'Tomorrow', sans-serif;
+                            font-size: 1em;
+                        } 
+                        .mostrar_senha {
+                            opacity: 0;
+                            cursor: pointer;
+                            margin: 0 0 0 10px;
+                            width: 24px;
+                            height: 24px;
+                            & + * {
+                                pointer-events: none;
+                                z-index: 1;
+                                position: absolute;
+                                right: 0;
+                                transition: 0.2s ease-in-out;
+                            }
+                            &:hover + * {
+                                color: $branco-100;
+                            }
+                            &:checked + * {
+                                color: $turquesa-100;
+                            }
+                            &:checked:hover + * {
+                                color: $turquesa-75;
+                            }
+                        }
+                    }
+                }
+                button {
+                    @include Button;
+                }
+            }
+            &#perfil_section {
+                #perfil_usuario {
+                    & > div {
+                        display: flex;
+                        align-items: center;
+                    } 
+                    h2, p {
+                        margin: 0.5vmin 0;
+                        font-size: 1em;
+                        span {
+                            font-size: 1.5em;
+                        }
+                    }
+                    .editar_usuario {
+                        margin-left: 10px;
+                        cursor: pointer;
+                        transition: 0.25s ease-in-out;
+                        color: $azul-75;
+                        &:hover {
+                            color: $turquesa-100;
+                        }
+                    }
+                }
+                hr {
+                    background: $branco-75;
+                }
+                #produtos_usuario {
+                    overflow-y: auto;
+                    height: 59%;
+                    @include Barra;
+                    & > h4 {
+                        font-size: 1.5em;
+                        font-variant: small-caps;
+                        font-weight: 100;
+                    }
+                    #estoque_usuario {
+                        a {
+                            margin: 10px 20px 10px 0;
+                            display: flex;
+                            align-items: center;
+                            background: $preto-25;
+                            padding: 10px;
+                            &:hover {
+                                background: $turquesa-100;
+                            }
+                            span {
+                                margin: 0 10px;
+                            }
+                            i {
+                                position: relative;
+                                font-size: 24px;
+                                padding: 0;
+                                transition: 0.25s ease-in-out;
+                            }
+                            &:not(#add_novo_produto) {
+                                & > i {
+                                    &::before {
+                                        z-index: -1;
+                                        content: "";
+                                        position: absolute;
+                                        bottom: 0;
+                                        width: 40%;
+                                        background: linear-gradient(to top, white, rgb(255, 205, 75));
+                                        margin: auto 30% 20% 30%;
+                                        height: 25%;
+                                    }
+                                }
+                                span {
+                                    margin: 0;
+                                    &:first-of-type {
+                                        margin-left: 10px;
+                                        text-overflow: ellipsis;
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        width: fit-content;
+                                        max-width: 60%;
+                                        
+                                        
+                                    }
+                                    &:not(:first-child):not(:first-of-type):not(:last-child) {
+                                        &::before {
+                                            content: ", ";
+                                            white-space: pre;
+                                        }
+                                    }
+                                    &:last-child {
+                                        margin-left: auto;
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                &:not(.usuario) {
+                    .editar_usuario {
+                        display: none;
+                    }
+                }
+            }
+            &#home_section {
+                & > div {
+                    & > {
+                        h2 {
+                            margin-top: 0;
+                        }
+                    }
+                    height: 80%;
+                    overflow-y: auto;
+                    @include Barra;
+                    #destaques {
+                        display: grid;
+                        grid-template-columns: 1fr 50px;
+                        grid-template-areas: "slide controle";
+                        height: 270px;
+                        margin-bottom: 20px;
+                        max-width: 600px;
+                        #slide {
+                            grid-area: slide;
+                            --tamanho: 10px;
+                            position: relative;
+                            width: 100%;
+                            height: inherit;
+                            background: rgba($color: #000000, $alpha: 0.05);
+                            .card_produto {
+                                &:not(.visivel) {
+                                    opacity: 0;
+                                    visibility: hidden;
+                                    transform: translateX(-15px);
+                                }
+                                &.visivel {
+                                    transform: translateX(0);
+                                    visibility: visible;
+                                    opacity: 1;
+                                }
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                display: grid;
+                                grid-auto-columns: 200px;
+                                grid-template-rows: auto;
+                                grid-template-areas: 
+                                    "nome nome"
+                                    "icone detalhes";
+                                align-items: center;
+                                align-content: baseline;
+                                justify-content: center;
+                                gap: 2.5vmin;
+                                height: inherit;
+                                .card_nome {
+                                    grid-area: nome;
+                                    margin-top: 0;
+                                    @include Label;
+                                    margin: 0;
+                                    text-overflow: ellipsis;
+                                    overflow: hidden;
+                                    white-space: nowrap;                         
+                                }
+                                .card_icone {
+                                    grid-area: icone;
+                                    text-align: center;
+                                }
+                                .detalhes_produto {
+                                    grid-area: detalhes;
+                                    border-collapse: separate;
+                                    border-spacing: 5px 0;
+                                    th {
+                                        text-align: center;
+                                    }
+                                    td {
+                                        vertical-align: baseline;
+                                        &:first-child {
+                                            display: flex;
+                                            justify-content: space-between;
+                                            &::after {
+                                                content: ":";
+                                            }
+                                        }
+                                        &:last-child {
+                                            text-align: end;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        #controle {
+                            grid-area: controle;
+                            a {
+                                background: $preto-25;
+                                align-items: center;
+                                display: flex;
+                                width: 100%;
+                                height: 50%;
+                                justify-content: center;
+                                &:hover {
+                                    background: $turquesa-100;
+                                    i {
+                                        color: white;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #home_produtos {
+                    display: flex;
+                    flex-wrap: wrap;
+                    --tamanho: 10px;
+                    justify-content: space-between;
+                    .card_produto {
+                        margin: 10px 0;
+                        background: rgba($color: #000000, $alpha: 0.05);
+                        transition: 0.25s ease-in-out;
+                        width: fit-content;
+                        display: grid;
+                        grid-auto-columns: 200px;
+                        grid-template-rows: auto;
+                        grid-template-areas: 
+                            "nome"
+                            "centro";
+                        align-items: center;
+                        align-content: baseline;
+                        justify-content: center;
+                        height: inherit;
+                        .card_nome {
+                            grid-area: nome;
+                            margin-top: 0;
+                            @include Label;
+                            margin: 0;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            white-space: nowrap;                         
+                        }
+                        .card_icone {
+                            transition: 0.25s ease-in-out;
+                            grid-area: centro;
+                            text-align: center;
+                        }
+                        .detalhes_produto {
+                            opacity: 0;
+                            visibility: hidden;
+                            grid-area: centro;
+                            border-collapse: separate;
+                            border-spacing: 5px 0;
+                            width: 80%;
+                            margin: auto;
+                            th {
+                                text-align: center;
+                            }
+                            td {
+                                vertical-align: baseline;
+                                &:first-child {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    &::after {
+                                        content: ":";
+                                    }
+                                }
+                                &:last-child {
+                                    text-align: end;
+                                }
+                            }
+                        }
+                        &:hover {
+                            background: $preto-25;
+                            .detalhes_produto {
+                                transition-delay: 0.05s;
+                                visibility: visible;
+                                opacity: 1;
+                            }
+                            .card_icone {
+                                opacity: 0;
+                                visibility: hidden;
+                            }
+                        }
+                    }
+                }
+            }
+            &#carrinho_section {
+                #carrinho_produtos {
+                    height: 80%;
+                    overflow-y: auto;
+                    @include Barra;
+                    a {
+                        margin: 10px 20px 10px 0;
+                        display: flex;
+                        align-items: center;
+                        background: $preto-25;
+                        padding: 10px;
+                        &:hover {
+                            background: $turquesa-100;
+                        }
+                        span {
+                            margin: 0 10px;
+                        }
+                        i {
+                            position: relative;
+                            font-size: 24px;
+                            padding: 0;
+                            transition: 0.25s ease-in-out;
+                        }
+                        &:not(#add_novo_produto) {
+                            & > i {
+                                &::before {
+                                    z-index: -1;
+                                    content: "";
+                                    position: absolute;
+                                    bottom: 0;
+                                    width: 40%;
+                                    background: linear-gradient(to top, white, rgb(255, 205, 75));
+                                    margin: auto 30% 20% 30%;
+                                    height: 25%;
+                                }
+                            }
+                            span {
+                                margin: 0;
+                                &:first-of-type {
+                                    margin-left: 10px;
+                                    text-overflow: ellipsis;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    width: fit-content;
+                                    max-width: 60%;
+                                    
+                                    
+                                }
+                                &:not(:first-child):not(:first-of-type):not(:last-child) {
+                                    &::before {
+                                        content: ", ";
+                                        white-space: pre;
+                                    }
+                                }
+                                &:last-child {
+                                    margin-left: auto;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            &#busca_section {
+                & > div {
+                    height: 80%;
+                    overflow-y: auto;
+                    @include Barra;
+                    padding-right: 5vmin;
+                    .form_control {
+                        position: relative;
+                        display: flex;
+                        flex-basis: auto;
+                        padding: 10px 0 5px 0;
+                        align-items: center;
+                        border-bottom: dashed 0.2vmin $branco-75;
+                        & > * {
+                            background: none;
+                            border: none;
+                            outline: none;
+                            color: $branco-75;
+                            &:focus {
+                                border: none;
+                                outline: none;
+                            }           
+                        }
+                        input {
+                            width: 100%;
+                            height: 24px;
+                            font-family: 'Tomorrow', sans-serif;
+                            font-size: 1em;
+                            &::placeholder {
+                                color: $branco-50;
+                            }
+                        } 
+                    }
+                    #busca_resultado {
+                        transition: 0.25s ease-in-out;
+                        margin: 50px 0;
+                        opacity: 0;
+                        &.visivel {
+                            opacity: 1;
+                        }
+                    }
+                    #resultado_produtos {
+                        display: flex;
+                        flex-wrap: wrap;
+                        --tamanho: 10px;
+                        justify-content: space-between;
+                        .card_produto {
+                            margin: 10px 0;
+                            background: rgba($color: #000000, $alpha: 0.05);
+                            transition: 0.25s ease-in-out;
+                            width: fit-content;
+                            display: grid;
+                            grid-auto-columns: 200px;
+                            grid-template-rows: auto;
+                            grid-template-areas: 
+                                "nome"
+                                "centro";
+                            align-items: center;
+                            align-content: baseline;
+                            justify-content: center;
+                            height: inherit;
+                            .card_nome {
+                                grid-area: nome;
+                                margin-top: 0;
+                                @include Label;
+                                margin: 0;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                                white-space: nowrap;                         
+                            }
+                            .card_icone {
+                                transition: 0.25s ease-in-out;
+                                grid-area: centro;
+                                text-align: center;
+                            }
+                            .detalhes_produto {
+                                opacity: 0;
+                                visibility: hidden;
+                                grid-area: centro;
+                                border-collapse: separate;
+                                border-spacing: 5px 0;
+                                width: 80%;
+                                margin: auto;
+                                th {
+                                    text-align: center;
+                                }
+                                td {
+                                    vertical-align: baseline;
+                                    &:first-child {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        &::after {
+                                            content: ":";
+                                        }
+                                    }
+                                    &:last-child {
+                                        text-align: end;
+                                    }
+                                }
+                            }
+                            &:hover {
+                                background: $preto-25;
+                                .detalhes_produto {
+                                    transition-delay: 0.05s;
+                                    visibility: visible;
+                                    opacity: 1;
+                                }
+                                .card_icone {
+                                    opacity: 0;
+                                    visibility: hidden;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    aside {
+        grid-area: aside;
+        overflow: auto;
+        height: 100%;
+        #produto {
+            width: fit-content;
+            height: 80%;
+            overflow-y: auto;
+            @include Barra;
+            padding-right: 2.5vmin;
+            margin: 0 auto;
+            display: grid;
+            transition: 0.25s ease-in-out;
+            grid-auto-columns: 200px;
+            grid-template-rows: auto;
+            grid-template-areas: 
+                "nome nome"
+                "icone detalhes"
+                "vendedor vendedor"
+                "acoes acoes"
+                "comentarios comentarios";
+            align-items: center;
+            justify-content: center;
+            gap: 2.5vmin;
+            a {
+                color: $azul-75;
+                &:hover {
+                    color: $turquesa-100;
+                }
+            }
+            #nome_produto {
+                grid-area: nome;
+                margin-top: 0;
+                @include Label;
+            }
+            #vendedor_produto {
+                grid-area: vendedor;
+                margin: 0;
+            }
+            #icone_produto {
+                grid-area: icone;
+                text-align: center;
+                --tamanho: 10px;
+            }
+            #detalhes_produto {
+                grid-area: detalhes;
+                border-collapse: separate;
+                border-spacing: 5px 0;
+                th {
+                    text-align: center;
+                }
+                td {
+                    vertical-align: baseline;
+                    &:first-child {
+                        display: flex;
+                        justify-content: space-between;
+                        &::after {
+                            content: ":";
+                        }
+                    }
+                    &:last-child {
+                        text-align: end;
+                    }
+                }
+            }
+            #acoes_produto {
+                grid-area: acoes;
+                #comprar_produto {
+                    @include Button;
+                    &.remover {
+                        background: $vermelho-75;
+                        &:hover {
+                            background: $vermelho-100;
+                            color: $branco-100;
+                        }
+                    }
+                }
+                #deletar_produto {
+                    display: none;
+                }
+            }
+            #comentarios_produto {
+                grid-area: comentarios;
+                h3 {
+                    @include Label;
+                }
+                .comentario {
+                    .respostas_comentario {
+                        margin-left: 2.5vmin;
+                    }
+                }
+                .detalhes {
+                    border-bottom: ridge 1px $branco-75;
+                    display: flex;
+                    align-items: baseline;
+                    flex-wrap: wrap;
+                    & > * {
+                        margin-right: 10px;
+                    }
+                }
+            }
+            &.do_usuario {
+                #vendedor_produto {
+                    display: none;
+                }
+                #acoes_produto {
+                    #comprar_produto {
+                        display: none;
+                    }
+                    #deletar_produto {
+                        @include Button;
+                        background: $vermelho-75;
+                        &:hover {
+                            background: $vermelho-100;
+                            color: $branco-100;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.inteiro {
+        grid-template-areas: 
+            "nav header header header"
+            "nav main main .";
+        & > aside {
+            display: none;
+        }
+    }
+    
+}
