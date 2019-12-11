@@ -4,12 +4,12 @@
 <nav>
     <ul>
         <li>
-            <a class="nav_link ativo" href="#login_section">
+            <a class="nav_link ativo" href="login_section">
                 <i class="material-icons">input</i>
             </a>
         </li>
         <li>
-            <a class="nav_link" href="#cadastro_section">
+            <a class="nav_link" href="cadastro_section">
                 <i class="material-icons">person_add</i>
             </a>
         </li>
@@ -17,7 +17,7 @@
 </nav>
 <main>
     <section id="login_section" data-titulo="Login">
-        <form id="login_form">
+        <form id="login_form" data-tipo="login">
             <div class="form_group">
                 <label for="login_usuario">Usuário</label>
                 <div class="form_control">
@@ -28,7 +28,7 @@
                 <label for="login_senha">Senha</label>
                 <div class="form_control">
                     <input type="password" name="login_senha" id="login_senha">
-                    <input type="checkbox" class="mostrar_senha">
+                    <input type="checkbox" class="mostrar_senha" tabindex="-1">
                     <i class="material-icons">remove_red_eye</i>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         </form>
     </section>
     <section id="cadastro_section" data-titulo="Cadastro">
-        <form id="cadastro_form">
+        <form id="cadastro_form" data-tipo="cadastro">
             <div class="form_group">
                 <label for="cadastro_nome">Nome</label>
                 <div class="form_control">
@@ -59,7 +59,7 @@
                 <label for="cadastro_senha">Senha</label>
                 <div class="form_control">
                     <input type="password" name="cadastro_senha" id="cadastro_senha">
-                    <input type="checkbox" class="mostrar_senha">
+                    <input type="checkbox" class="mostrar_senha" tabindex="-1">
                     <i class="material-icons">remove_red_eye</i>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <label for="confirmar_senha">Confirmar senha</label>
                 <div class="form_control">
                     <input type="password" name="confirmar_senha" id="confirmar_senha">
-                    <input type="checkbox" class="mostrar_senha">
+                    <input type="checkbox" class="mostrar_senha" tabindex="-1">
                     <i class="material-icons">remove_red_eye</i>
                 </div>
             </div>
@@ -77,3 +77,5 @@
 </main>
 <aside id="propaganda">
 </aside>
+<script src="./js/modal.js"></script>
+<script src="./js/login.js"></script>

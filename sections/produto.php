@@ -119,8 +119,10 @@ $propriedade_privada = $_SESSION['id'] == $resultado['id_usuario']? true: false;
                 ],
                 'comparadores' => ['=']
             ];
-    
-            $respostas = $controle->selecionar($tabela, ['*'], $filtro);
+            $ordem = [
+                'data' => 'ASC'
+            ];
+            $respostas = $controle->selecionar($tabela, ['*'], $filtro, $ordem);
             if (isset($respostas) && !empty($respostas) && sizeof($respostas) !== 0) {
                 foreach ($respostas as $resposta) {
             ?>

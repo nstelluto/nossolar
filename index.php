@@ -1,7 +1,11 @@
 <?php
-set_include_path('includes');
+$tempo_de_vida = 3600;
 session_start();
-$_SESSION['id'] = 0;
+setcookie(session_name(),session_id(),time()+$tempo_de_vida);
+if (isset($_GET['sair'])) {
+    unset($_SESSION['id']);
+    session_destroy();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -14,13 +18,29 @@ $_SESSION['id'] = 0;
     <title>Nosso Lar</title>
 </head>
 <body class="inteiro">
+    <div id="modal">
+        <div id="bloco_modal">
+            <div id="controle_modal">
+                <a href="1" id="confirmar_modal">
+                    <i class="material-icons">done</i>
+                </a>
+                <a href="0" id="cancelar_modal">
+                    <i class="material-icons">clear</i>
+                </a>
+            </div>
+            <div id="mensagem_modal">
+                <div class="carregando">
+                    <p>Carregando</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php
     if (!isset($_SESSION['id'])) {
-        include 'login.php';
+        include './includes/login.php';
     } else {
-        include 'main.php';
+        include './includes/main.php';
     }
     ?>
-    <script src="js/script.js"></script>
 </body>
 </html>

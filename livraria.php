@@ -18,24 +18,7 @@ class Controle {
         $this->conexao->real_connect(...$conexao);
         $this->conexao->set_charset("utf8");
 	}
-	/*
-	A array argumentos vai servir pra gerar a string de consulta por meio do implode.
-	ReflectionClass é uma classe que serve pra pegar uma classe e chamar o método escolhido da classe,
-	usando o método getMethod, com parametros personalizados de um objeto derivado da classe, usando o
-	método invokeArgs
-
-	Por exemplo nesse caso, eu to usando o objeto mysqli_stmt, pra depois usar o bind_param, o problema é
-	que bind_param é uma bosta, ele leva dois parametros de entrada, sendo que o primeiro valor é uma
-	string com as iniciais dos tipos de dados que vão ser passados pra consulta, o que torna difícil de 
-	usar dinamicamente. Por isso eu resolvo construir um objeto da classe ReflectionClass, pra poder passar
-	uma array como parametro, sendo que a array daí eu defino quando for chamar meu método inserir, e não
-	na construção dele dentro da classe. O primeiro valor da array é sempre uma string, assim como o primeiro
-	parametro de entrada do método original (bind_param), já o resto, infelizmente, têm de ser referências
-	de variáveis (ou elementos de array). Aí que entra o foreach ali embaixo. A cada elemento da array que
-	eu passar quando for chamar o método inserir eu concateno ao elemento tipos da array referencias com a
-	inicial do tipo de dado do elemento atual no loop do foreach, e aí também adiciono um novo elemento à
-	array referencias, que no final fica exatamente do jeito que o invokeArgs aceita. O resto é história!
-	*/
+		
 	public function inserir ($tabela, $parametros) {
 		$argumentos[] = "INSERT INTO";
 		$argumentos[] = $tabela;
@@ -77,7 +60,11 @@ class Controle {
 				} else {
 					$dado = $value;
 				}
-				$comparacao[] = $key." ".current($comparadores)." ".$dado;
+				if (strpos(current($comparadores),'LIKE') === false) {
+					$comparacao[] = $key." ".current($comparadores)." ".$dado;
+				} else {
+					$comparacao[] = $key." LIKE CONCAT('%',?,'%')";
+				}
 				next($comparadores);
 			}
 			$argumentos[] = implode(' '.$operador.' ', $comparacao);
@@ -216,7 +203,7 @@ function gerar_cards ($linhas, $tipo = 'blocos') {
 					</tr>
 					<tr>
 						<td>Diferença</td>
-						<td>'.sprintf("%+d", $linha['desconto']).'%</td>
+						<td>'.round($linha['desconto'], 2).'%</td>
 					</tr>
 				</table>
 			</a>';
@@ -224,3 +211,18 @@ function gerar_cards ($linhas, $tipo = 'blocos') {
 	}
 	return $html;
 }
+
+// SELECT P.codigo,
+// CONCAT_WS(" - ",P.nome, N.nome) AS nome,
+// P.nivel,
+// P.quantia,
+// P.preco,
+// (N.rpm * P.quantia) AS sugerido,
+// (((P.preco - (SELECT sugerido))/(SELECT sugerido)) * 100) AS desconto,
+// P.usuario as id_usuario,
+// U.nome as usuario
+// FROM produtos AS P
+// INNER JOIN usuarios AS U
+// INNER JOIN niveis AS N
+// ON P.usuario = U.codigo
+// AND P.nivel = N.codigo
